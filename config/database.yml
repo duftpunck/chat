@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: andru
+  password: duft1992
+
+development:
+  <<: *default
+  host: localhost
+  database: chat_dev
+
+test:
+  <<: *default
+  host: localhost
+  database: chat_test
