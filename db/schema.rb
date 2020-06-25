@@ -10,17 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_140954) do
+ActiveRecord::Schema.define(version: 2020_06_24_173004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "chat_rooms", force: :cascade do |t|
     t.string "title"
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_chat_rooms_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -46,7 +44,18 @@ ActiveRecord::Schema.define(version: 2020_06_23_140954) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "chat_rooms", "users"
+  create_table "users_chats", force: :cascade do |t|
+    t.string "role"
+    t.bigint "user_id", null: false
+    t.bigint "chat_room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_room_id"], name: "index_users_chats_on_chat_room_id"
+    t.index ["user_id"], name: "index_users_chats_on_user_id"
+  end
+
   add_foreign_key "messages", "chat_rooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "users_chats", "chat_rooms"
+  add_foreign_key "users_chats", "users"
 end
