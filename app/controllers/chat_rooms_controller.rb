@@ -26,6 +26,9 @@ class ChatRoomsController < ApplicationController
 
   def destroy
     @chat_room = ChatRoom.find(params[:id])
+      unless PostPolicy.new(current_user, @chat_room).destroy?
+        raise Pundit::NotAuthorizedError, "not allowed to update? this #{@chat_room.inspect}"
+      end
     @chat_room.users_chats.all.delete_all
     @chat_room.destroy
     redirect_to chat_rooms_path
