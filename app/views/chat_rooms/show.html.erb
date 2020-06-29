@@ -27,7 +27,8 @@
 
   <%= f.submit "send", class: 'btn btn-primary btn-lg' %>
 
-  <td><%= link_to  'Delete Chat', @chat_room, method: :delete, data: { confirm: 'Are you sure?' } 	%></td>
+  <% if ChatPolicy.new(current_user, @chat_room).destroy?%>
+  <td><%= link_to  'Delete Chat', @chat_room, method: :delete, data: { confirm: 'Are you sure?' }%> </td>
+  <% end %>
 
 <% end %>
- 
