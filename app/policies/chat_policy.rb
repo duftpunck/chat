@@ -7,9 +7,7 @@ class ChatPolicy < ApplicationPolicy
   end 
 
 	def show?
-		
     user.users_chats.find_by(chat_room_id: chat_room.id)&.role == 'user' or user.users_chats.find_by(chat_room_id: chat_room.id)&.role == 'admin'
-
   end
 
   def destroy?

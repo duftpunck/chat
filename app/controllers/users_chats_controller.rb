@@ -12,4 +12,15 @@ class UsersChatsController < ApplicationController
     end
     redirect_to @chat_room
   end
+
+  def destroy
+# binding.pry\
+    users_chat = UsersChat.find(params[:id])
+    @chat_room = ChatRoom.find(users_chat.chat_room_id)
+    users_chat.delete
+    redirect_to @chat_room
+    # @users = User.find(id: params[:user_ids])
+    # @chat_room = ChatRoom.find(params[:chat_id])
+    # @user.user_chats.delete(:role)
+  end
 end

@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :users, only: :index
-# root to: "home#index"
+
   resources :chat_rooms, only: [:new, :create, :show, :index, :destroy]
 	
-  resources :users_chats, only: [:new] do
+  resources :users_chats, only: [:new, :destroy] do
     collection do
       post :bulk_create
     end

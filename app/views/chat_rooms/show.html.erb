@@ -7,9 +7,14 @@
 	<% @users.each do |user| %>
 		<tr class="users-list-body">
 			<td><%= user.nickname %></td>
+      <% if ChatPolicy.new(current_user, @chat_room).destroy?%>
+          <td><%= link_to "Remove", { controller: 'users_chats', action: 'destroy', id: UsersChat.find_by(user_id: user.id, chat_room_id: @chat_room.id).id }, method: :delete, data: { confirm: 'Are you sure?'} %></td>
+      <% end %>
 		</tr>
 	<% end %>
 </table>
+
+
 
 <div id="messages" data-chat-room-id="<%= @chat_room.id %>">
   <%= render @chat_room.messages %>
@@ -20,7 +25,7 @@
 <%= form_for @message, url: '#' do |f| %>
   <%= hidden_field_tag 'chat_room_id', @chat_room.id %>
   <div class="form-group">
-    <%= f.label :body %>
+    <%= f.label :message %>
     <%= f.text_area :body, class: 'form-control' %>
     <small class="text-muted">From 2 to 1000 characters</small>
   </div>
@@ -30,5 +35,6 @@
   <% if ChatPolicy.new(current_user, @chat_room).destroy?%>
   <td><%= link_to  'Delete Chat', @chat_room, method: :delete, data: { confirm: 'Are you sure?' }%> </td>
   <% end %>
+
 
 <% end %>
