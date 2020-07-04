@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  #has_many :chat_rooms, dependent: :destroy
+  # has_many :chat_rooms, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :users_chats
   has_many :chat_rooms, through: :users_chats

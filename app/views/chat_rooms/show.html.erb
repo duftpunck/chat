@@ -1,17 +1,17 @@
 <h1 id="chat_title"><%= @chat_room.title %></h1>
 
 <table id="users-list">
-	<tr id="users-list-heading">
-		<th>Nick</th>
-	</tr>
-	<% @users.each do |user| %>
-		<tr class="users-list-body">
-			<td><%= user.nickname %></td>
+  <tr id="users-list-heading">
+    <th>Nick</th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr class="users-list-body">
+      <td><%= user.nickname %></td>
       <% if ChatPolicy.new(current_user, @chat_room).destroy?%>
           <td><%= link_to "Remove", { controller: 'users_chats', action: 'destroy', id: UsersChat.find_by(user_id: user.id, chat_room_id: @chat_room.id).id }, method: :delete, data: { confirm: 'Are you sure?'} %></td>
       <% end %>
-		</tr>
-	<% end %>
+    </tr>
+  <% end %>
 </table>
 
 
